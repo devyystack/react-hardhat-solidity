@@ -98,7 +98,7 @@ render() {
             <div className='container'>
               <div className='row m-10-hor'>
                 <div className='col-12'>
-                  <h1 className='text-center'>Create 2</h1>
+                  <h1 className='text-center'>List Item for Sell</h1>
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@ render() {
           <div className="col-lg-7 offset-lg-1 mb-5">
               <form id="form-create-item" className="form-border" action="#">
                   <div className="field-set">
-                      <h5>Upload file</h5>
+                      {/* <h5>Upload file</h5>
 
                       <div className="d-create-file">
                           <p id="file_name">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</p>
@@ -123,7 +123,7 @@ render() {
                             <input id='upload_file' type="file" multiple onChange={this.onChange} />
                           </div>
                           
-                      </div>
+                      </div> */}
 
                       <div className="spacer-single"></div>
 
@@ -212,7 +212,7 @@ render() {
 
                       <div className="spacer-10"></div>
 
-                      <input type="button" id="submit" className="btn-main" value="Create Item"/>
+                      <input type="button" id="submit" className="btn-main" value="Complete Listing"/>
                   </div>
               </form>
           </div>

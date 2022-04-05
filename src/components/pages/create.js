@@ -1,4 +1,4 @@
-/* eslint-disable import/first */
+
 import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
@@ -13,6 +13,8 @@ import Clock from "../components/Clock";
 import Footer from '../components/footer';
 import { createGlobalStyle } from 'styled-components';
 // import { Redirect } from '@reach/router';
+import { useNavigate } from "@reach/router"
+
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
@@ -61,6 +63,7 @@ export default function CreateItem() {
     // navigate("/");
     // const history = History();
     // const handleClick = () => history.push('/')
+    const navigate = useNavigate();
     async function onChange(e) {
         const file = e.target.files[0]
         // var files = e.target.files;
@@ -150,6 +153,7 @@ export default function CreateItem() {
 
         // router.push('/')
         // navigate("/");
+        navigate('../', { replace: true })
 
     }
 

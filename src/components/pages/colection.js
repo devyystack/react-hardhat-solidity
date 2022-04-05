@@ -1,5 +1,6 @@
 import React from "react";
 import ColumnZero from '../components/ColumnZero';
+import ColumnZeroCollection from "../components/ColumnZeroCollection";
 import ColumnZeroTwo from '../components/ColumnZeroTwo';
 import Footer from '../components/footer';
 import { createGlobalStyle } from 'styled-components';
@@ -86,12 +87,15 @@ return (
         </div>
       {openMenu && (  
         <div id='zero1' className='onStep fadeIn'>
-         <ColumnZero/>
+         {/* <ColumnZero/> */}
+         <ColumnZeroTwo/>
+         
         </div>
       )}
       {openMenu1 && ( 
         <div id='zero2' className='onStep fadeIn'>
-         <ColumnZeroTwo/>
+       
+         <ColumnZeroCollection/>
         </div>
       )}
       </section>
