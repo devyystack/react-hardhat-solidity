@@ -111,19 +111,7 @@ render() {
           <div className="col-lg-7 offset-lg-1 mb-5">
               <form id="form-create-item" className="form-border" action="#">
                   <div className="field-set">
-                      {/* <h5>Upload file</h5>
-
-                      <div className="d-create-file">
-                          <p id="file_name">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</p>
-                          {this.state.files.map(x => 
-                          <p key="{index}">PNG, JPG, GIF, WEBP or MP4. Max 200mb.{x.name}</p>
-                          )}
-                          <div className='browse'>
-                            <input type="button" id="get_file" className="btn-main" value="Browse"/>
-                            <input id='upload_file' type="file" multiple onChange={this.onChange} />
-                          </div>
-                          
-                      </div> */}
+                      
 
                       <div className="spacer-single"></div>
 

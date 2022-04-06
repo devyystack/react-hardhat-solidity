@@ -76,20 +76,30 @@ export default function ColumnZeroCollection() {
         setNfts(items)
         setLoadingState('loaded')
     }
+
+    // async function buyNFT(nft){
+    //     // debugger
+    //     const web3Modal = new Web3Modal();
+    //     const connection = await web3Modal.connect();
+    //     const provider = new ethers.providers.Web3Provider(connection);
+    
+    //     //sign the transaction
+    //     const signer = provider.getSigner();
+    //     const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer);
+    
+    //     //set the price
+    //     const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
+    
+    //     //make the sale
+    //     const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
+    //       value: price
+    //     });
+    //     debugger
+    //     await transaction.wait();
+    
+    //     loadNFTs()
+    //   }
     const navigate = useNavigate();
-    // let navigate = useNavigate(); 
-    // const redirect = () =>{ 
-    // //   let path = `newPath`; 
-    //   navigate('/create2');
-    // };
-    // function onImgLoad({ target: img }) {
-    //     let currentHeight = this.state.height;
-    //     if (currentHeight < img.offsetHeight) {
-    //         this.setState({
-    //             height: img.offsetHeight
-    //         })
-    //     }
-    // }
     console.log(nfts, "nft-------------------------------------------")
     if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets created</h1>)
     return (
@@ -129,7 +139,7 @@ export default function ColumnZeroCollection() {
                                         Price - {nft.price} Eth
                                     </div>
                                     <div className="text-left">
-                                        <button onClick={() => navigate('../create2', { replace: true })} type="button" className="btn-main" 
+                                        <button   onClick={() => buyNFT(nft)} type="button" className="btn-main" 
                                         ><span>Sell</span></button>
                                     </div>
                                     <div className="nft__item_like">

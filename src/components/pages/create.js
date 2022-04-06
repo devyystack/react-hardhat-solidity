@@ -3,18 +3,15 @@ import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import Web3Modal from 'web3modal'
-// import { useNavigate } from "react-router";
 import { nftaddress, nftmarketaddress } from '../../config';
 import NFT from '../../../src/NFT.json';
 import Market from '../../NFTMarket.json';
 import { EtherscanProvider } from '@ethersproject/providers'
-// import Image from 'next-images'
 import Clock from "../components/Clock";
 import Footer from '../components/footer';
 import { createGlobalStyle } from 'styled-components';
-// import { Redirect } from '@reach/router';
 import { useNavigate } from "@reach/router"
-
+import Loader from 'react-loader-spinner';
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
@@ -248,7 +245,7 @@ export default function CreateItem() {
                                     placeholder="Asset Price in Eth"
                                     className="mt-8 border rounded p-4"
                                     type="number"
-                                    onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+                                    onChange={e => updateFormInput({ ... , price: e.target.value })}
                                 /> */}
                                 <input
                                     type="file"
@@ -284,6 +281,7 @@ export default function CreateItem() {
                                 >Create NFT</button> */}
                             </div>
                         </form>
+                        
                     </div>
                     <div className="col-lg-3 col-sm-6 col-xs-12">
                         <h5>Preview item</h5>
