@@ -27,9 +27,7 @@ module.exports = {
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/69b84db4409b48ccb999399d5d5244b0`,
       chainId:4,
-      accounts: [privateKey],
-      gas: 2100000,
-      gasPrice: 8000000000, 
+      accounts: [privateKey]
     },
     // mainnet: {
     //   url: `https://polygon-mainnet.infura.io/v3/${projectId}`,

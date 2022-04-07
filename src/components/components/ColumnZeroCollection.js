@@ -103,6 +103,7 @@ export default function ColumnZeroCollection() {
     console.log(nfts, "nft-------------------------------------------")
     if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets created</h1>)
     return (
+        <>
         <div className='row'>
             <h2 className="text-2xl py-2 text-center">My Collections</h2>
 
@@ -153,42 +154,44 @@ export default function ColumnZeroCollection() {
                     </div>
                 ))
             }
-            <div>
-                {
-                    Boolean(sold.length) && (
-                        <div className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" >
-                            <h2 className="text-2xl py-2 text-center">NFT Sold</h2>
-                            {
-                                sold.map((nft, i) => (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-                                        <div key={i} className="border shadow rounded-xl overflow-hidden">
-                                            <div className="nft__item">
-                                                <div className="nft__item_wrap">
-                                                    <Outer>
-                                                        <img
-                                                            width={250}
-                                                            height={300}
-                                                            src={nft.image}
-                                                            className="lazy nft__item_preview"
-                                                            alt="Picture of the author" />
-                                                    </Outer>
-                                                </div>
-                                                <div className="nft__item_info">
-                                                    <div class="nft__item_price">
-                                                        Price - {nft.price} Eth
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    )
-                }
-            </div>
+           
 
 
         </div>
+         <div className="row">
+         {
+             Boolean(sold.length) && (
+                 <div className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" >
+                     <h2 className="text-2xl py-2text-center">NFT Sold</h2>
+                     {
+                         sold.map((nft, i) => (
+                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                                 <div key={i} className="border shadow rounded-xl overflow-hidden">
+                                     <div className="nft__item">
+                                         <div className="nft__item_wrap">
+                                             <Outer>
+                                                 <img
+                                                     width={250}
+                                                     height={300}
+                                                     src={nft.image}
+                                                     className="lazy nft__item_preview"
+                                                     alt="Picture of the author" />
+                                             </Outer>
+                                         </div>
+                                         <div className="nft__item_info">
+                                             <div class="nft__item_price">
+                                                 Price - {nft.price} Eth
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         ))
+                     }
+                 </div>
+             )
+         }
+     </div>
+     </>
     )
 }

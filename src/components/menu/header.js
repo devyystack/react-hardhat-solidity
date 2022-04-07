@@ -141,7 +141,7 @@ const Header = function () {
                             {/* <NavLink to=" " onClick={() => window.open("http://gigaland.grey.on3-step.com", "_self")}>New Grey Scheme</NavLink> */}
                             {/* <NavLink to=" " onClick={() => window.open("http://gigaland.retro.on3-step.com", "_self")}>New Retro Scheme</NavLink> */}
                             {/* <NavLink to="/" onClick={() => btn_icon(!showmenu)}>Homepage</NavLink> */}
-                            <NavLink to="/home1" onClick={() => btn_icon(!showmenu)}>Homepage 1</NavLink>
+                            {/* <NavLink to="/home1" onClick={() => btn_icon(!showmenu)}>Homepage 1</NavLink> */}
                             {/* <NavLink to="/home2" onClick={() => btn_icon(!showmenu)}>Homepage 2</NavLink> */}
                             {/* <NavLink to="/home3" onClick={() => btn_icon(!showmenu)}>Homepage 3</NavLink> */}
                           </div>
@@ -171,7 +171,7 @@ const Header = function () {
                       )}
                     </div>
                   </div>
-                 
+
                   <div className='navbar-item'>
                     <NavLink to="/activity" onClick={() => btn_icon(!showmenu)}>
                       Activity
@@ -233,26 +233,30 @@ const Header = function () {
             <Breakpoint xl>
               <div className='menu'>
                 <div className='navbar-item'>
-                  <div ref={ref}>
+                  <NavLink to="/">
+                    Home
+                    <span className='lines'></span>
+                  </NavLink>
+                  {/* <div ref={ref}>
                     <div className="dropdown-custom dropdown-toggle btn"
                       onMouseEnter={handleBtnClick} onMouseLeave={closeMenu}>
                       Home
-                      <span className='lines'></span>
-                      {openMenu && (
+                      <span className='lines'></span> */}
+                  {/* {openMenu && (
                         <div className='item-dropdown'>
                           <div className="dropdown" onClick={closeMenu}>
-                            {/* <NavLink to=" " onClick={() => window.open("http://gigaland.grey.on3-step.com", "_self")}>New Grey Scheme</NavLink> */}
-                            {/* <NavLink to=" " onClick={() => window.open("http://gigaland.retro.on3-step.com", "_self")}>New Retro Scheme</NavLink> */}
-                            {/* <NavLink to="/">Homepage</NavLink> */}
-                            <NavLink to="/home1">Homepage 1</NavLink>
-                            {/* <NavLink to="/home2">Homepage 2</NavLink> */}
-                            {/* <NavLink to="/home3">Homepage 3</NavLink> */}
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                            <NavLink to=" " onClick={() => window.open("http://gigaland.grey.on3-step.com", "_self")}>New Grey Scheme</NavLink> */}
+                  {/* <NavLink to=" " onClick={() => window.open("http://gigaland.retro.on3-step.com", "_self")}>New Retro Scheme</NavLink> */}
+                  {/* <NavLink to="/">Homepage</NavLink> */}
+                  {/* <NavLink to="/home1">Homepage 1</NavLink> */}
+                  {/* <NavLink to="/home2">Homepage 2</NavLink> */}
+                  {/* <NavLink to="/home3">Homepage 3</NavLink> */}
+                  {/* </div> */}
+                  {/* </div> */}
+                  {/* )} */}
+                  {/* </div>
 
-                  </div>
+                  </div> */}
                 </div>
                 <div className='navbar-item'>
                   <div ref={ref1}>
@@ -277,7 +281,7 @@ const Header = function () {
 
                   </div>
                 </div>
-               
+
                 <div className='navbar-item'>
                   <NavLink to="/activity">
                     Activity
@@ -341,7 +345,7 @@ const Header = function () {
             <NavLink to="/wallet" className="btn-main">Connect Wallet</NavLink>
           </div>
 
-        </div>
+        </div >
 
         <button className="nav-icon" onClick={() => btn_icon(!showmenu)}>
           <div className="menu-line white"></div>
@@ -349,8 +353,8 @@ const Header = function () {
           <div className="menu-line2 white"></div>
         </button>
 
-      </div>
-    </header>
+      </div >
+    </header >
   );
 }
 export default Header;
