@@ -114,7 +114,12 @@ export default function CreateItem() {
 
     //2. List item for sale
     async function createSale(url) {
-        const web3Modal = new Web3Modal();
+        const web3Modal = new Web3Modal(
+            {
+                network: "Rinkeby",
+                cacheProvider: true,
+              }
+        );
         const connection = await web3Modal.connect();
         const provider = new ethers.providers.Web3Provider(connection);
 

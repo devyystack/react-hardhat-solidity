@@ -33,6 +33,7 @@ export default function ColumnZeroTwo() {
               cacheProvider: true,
             }
         )
+        
         const connection = await web3Modal.connect()
         const provider = new ethers.providers.Web3Provider(connection)
       const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
@@ -40,7 +41,7 @@ export default function ColumnZeroTwo() {
   
       //return an array of unsold market items
       const data = await marketContract.fetchMarketItems();
-  
+      console.log(data,"data----------44")
       const items = await Promise.all(data.map(async i => {
          const tokenUri = await tokenContract.tokenURI(i.tokenId);
          const meta = await axios.get(tokenUri);
