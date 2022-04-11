@@ -14,6 +14,10 @@ import { useNavigate } from "@reach/router"
 import Loader from 'react-loader-spinner';
 import { Spinner } from "react-bootstrap";
 import $ from "jquery"
+import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+  
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
@@ -55,7 +59,12 @@ const GlobalStyles = createGlobalStyle`
     cursor: not-allowed!important;
   } 
 `;
-
+// const showToast = () => {
+//     toast.warn("Success Notification !", {
+//         position: toast.POSITION.TOP_CENTER
+//       });
+//   };
+toast.configure()
 
 export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
@@ -63,7 +72,16 @@ export default function CreateItem() {
     const [files, setFiles] = useState('')
     let [loading, setLoading] = useState(false)
     // let loading = false
+    const { register, control, errors, formState } = useForm({
+        // mode: "onChange",
+        // reValidateMode:"onChange",
+        // defaultValue:{
+        //     child:[{name:""}]
+        // }
+    });
+    // const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
+  
     const navigate = useNavigate();
     async function onChange(e) {
         const file = e.target.files[0]
@@ -104,19 +122,23 @@ export default function CreateItem() {
         let des = $("#item_desc").value
         let pri = $("#item_price").value
         let img = $("#item_image").value
-        if (title  === "" || des === "" || pri  === ""|| img ==="") {
-            alert('please fill all the feilds')
-            return
-        }
-        setLoading(true)
-
         const { name, description, price } = formInput; //get the value from the form input
 
         //form validation
         if (!name || !description || !price || !fileUrl) {
+            toast.warn("All Fields are Required !", {
+                position: toast.POSITION.TOP_CENTER
+              });
             return
         }
 
+        // if (title === "" || des === "" || pri === "" || img === "") {
+        //     alert('please fill all the feilds')
+        //     return
+        // }
+        setLoading(true)
+
+       
         const data = JSON.stringify({
             name, description, image: fileUrl
         });
@@ -131,6 +153,7 @@ export default function CreateItem() {
 
         } catch (error) {
             console.log(`Error uploading file: `, error)
+            setLoading(false)
         }
 
     }
@@ -171,7 +194,7 @@ export default function CreateItem() {
         listingPrice = listingPrice.toString()
 
         transaction = await contract.createMarketItem(
-            nftaddress, tokenId, price, {value: listingPrice }
+            nftaddress, tokenId, price, { value: listingPrice }
         )
 
         await transaction.wait()
@@ -206,9 +229,13 @@ export default function CreateItem() {
                                     id="item_title"
                                     className="form-control"
                                     placeholder="e.g. 'Crypto Fix"
+
+                                    // ref={register({required:true})}
                                     onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-                                    
+
                                 />
+                              
+
                                 <div className="spacer-10"></div>
 
                                 <h5>NFT Description</h5>
@@ -236,7 +263,7 @@ export default function CreateItem() {
                                 <input
                                     type="file"
                                     name="Asset"
-                                    className="my-4" id="item_image"
+                                    className="my-4 form-control" id="item_image"
                                     onChange={onChange}
                                 />
                                 {/* {
@@ -256,7 +283,7 @@ export default function CreateItem() {
                                 <button
                                     type="button"
                                     id="submit"
-                                    className= {`btn-main ${loading?"disabled":""}`}
+                                    className={`btn-main ${loading ? "disabled" : ""}`}
                                     value="Create NFT"
                                     onClick={createItem}
                                     style={{
@@ -265,7 +292,7 @@ export default function CreateItem() {
                                     }}
                                 // disabled={formInput}
                                 // onClick={hendleloading} 
-                               > Create Nft
+                                > Create Nft
                                     {loading ? <span className='spinner-border' role="status" style={{ display: "inline-block", margin: "0 14px", width: "1rem", height: "1rem" }}>
                                         <span className='sr-only'>Loaing...</span>
                                     </span> : ''}

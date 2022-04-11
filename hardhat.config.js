@@ -21,12 +21,12 @@ const projectId = "69b84db4409b48ccb999399d5d5244b0"
  */
 module.exports = {
   networks: {
-      hardhat:{
-        chainId: 1337
-      },
+    hardhat: {
+      chainId: 1337
+    },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/69b84db4409b48ccb999399d5d5244b0`,
-      chainId:4,
+      chainId: 4,
       accounts: [privateKey]
     },
     // mainnet: {
