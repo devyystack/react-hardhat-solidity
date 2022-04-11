@@ -200,7 +200,7 @@ export default class Responsive extends Component {
                                     <div className="nft__item_wrap" style={{ height: `${this.state.height}px` }}>
                                         <Outer>
                                             <span >
-                                                <img src={nft.image} className="lazy nft__item_preview img-responsive" onLoad={this.onImgLoad} alt="" onClick={() => this.nftClickHandler(nft)} />
+                                                <img src={nft.image} className="lazy nft__item_preview img-responsive cursor-pointer" onLoad={this.onImgLoad} alt="" onClick={() => this.nftClickHandler(nft)} />
                                             </span>
                                         </Outer>
                                     </div>

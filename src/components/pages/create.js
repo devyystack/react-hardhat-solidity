@@ -12,7 +12,8 @@ import Footer from '../components/footer';
 import { createGlobalStyle } from 'styled-components';
 import { useNavigate } from "@reach/router"
 import Loader from 'react-loader-spinner';
-
+import { Spinner } from "react-bootstrap";
+import $ from "jquery"
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
@@ -48,6 +49,11 @@ const GlobalStyles = createGlobalStyle`
       color: #fff !important;
     }
   }
+  button.disabled{
+    background-color: #cad1df;
+    pointer-events: none;
+    cursor: not-allowed!important;
+  } 
 `;
 
 
@@ -55,18 +61,13 @@ export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
     const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
     const [files, setFiles] = useState('')
-    // const navigate = useNavigate();
-    // const navigate = useNavigate();
-    // navigate("/");
-    // const history = History();
-    // const handleClick = () => history.push('/')
+    let [loading, setLoading] = useState(false)
+    // let loading = false
+
     const navigate = useNavigate();
     async function onChange(e) {
         const file = e.target.files[0]
-        // var files = e.target.files;
-        // var filesArr = Array.prototype.slice.call(files);
-        // document.getElementById("file_name").style.display = "none";
-        // setFiles({ files: [...this.state.files, ...filesArr] });
+
         try { //try uploading the file
             const added = await client.add(
                 file,
@@ -76,7 +77,7 @@ export default function CreateItem() {
             )
             //file saved in the url path below
             const url = `https://ipfs.infura.io/ipfs/${added.path}`
-            alert(added.path)
+            // alert(added.path)
             setFileUrl(url)
         } catch (e) {
             console.log('Error uploading file: ', e)
@@ -88,8 +89,27 @@ export default function CreateItem() {
     //     navigate("/");
 
     // }
+    // async function hendleloading() {
+    //     // loading = true
+    //     setLoading(true)
+    //     loading ? setLoading(false) : setLoading(true)
+
+    //     alert(loading)
+
+    // }
+
+
     async function createItem() {
-        // <Redirect to="/" />
+        let title = $("#item_title").value
+        let des = $("#item_desc").value
+        let pri = $("#item_price").value
+        let img = $("#item_image").value
+        if (title  === "" || des === "" || pri  === ""|| img ==="") {
+            alert('please fill all the feilds')
+            return
+        }
+        setLoading(true)
+
         const { name, description, price } = formInput; //get the value from the form input
 
         //form validation
@@ -105,7 +125,10 @@ export default function CreateItem() {
             const added = await client.add(data)
             const url = `https://ipfs.infura.io/ipfs/${added.path}`
             //pass the url to sav eit on Polygon adter it has been uploaded to IPFS
-            createSale(url)
+            await createSale(url)
+
+            setLoading(false)
+
         } catch (error) {
             console.log(`Error uploading file: `, error)
         }
@@ -115,10 +138,10 @@ export default function CreateItem() {
     //2. List item for sale
     async function createSale(url) {
         const web3Modal = new Web3Modal(
-            {
-                network: "Rinkeby",
-                cacheProvider: true,
-              }
+            // {
+            //     network: "Rinkeby",
+            //     cacheProvider: true,
+            // }
         );
         const connection = await web3Modal.connect();
         const provider = new ethers.providers.Web3Provider(connection);
@@ -148,13 +171,11 @@ export default function CreateItem() {
         listingPrice = listingPrice.toString()
 
         transaction = await contract.createMarketItem(
-            nftaddress, tokenId, price, { value: listingPrice }
+            nftaddress, tokenId, price, {value: listingPrice }
         )
 
         await transaction.wait()
 
-        // router.push('/')
-        // navigate("/");
         navigate('../', { replace: true })
 
     }
@@ -179,44 +200,15 @@ export default function CreateItem() {
                     <div className="col-lg-7 offset-lg-1 mb-5">
                         <form id="form-create-item" className="form-border" action="#">
                             <div className="field-set">
-                                {/* <h5>Upload file</h5>
-                                <div className="d-create-file">
-                                    <p id="file_name">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</p> */}
-                                    {/* {files.map(x =>
-                                        <p key="{index}">PNG, JPG, GIF, WEBP or MP4. Max 200mb.{x.name}</p>
-                                    )} */}
-                                    {/* {
-                                        fileUrl && (
 
-                                            <Image
-                                                src={fileUrl}
-                                                alt="Picture of the author"
-                                                className="rounded mt-4"
-                                                width={350}
-                                                height={500}
-                                            // blurDataURL="data:..." automatically provided
-                                            // placeholder="blur" // Optional blur-up while loading
-                                            />
-                                        )
-                                    } */}
-                                    {/* <div className='browse'>
-                                        <input type="button" id="get_file" className="btn-main" value="Browse" />
-                                        <input id='upload_file' type="file" multiple onChange={onChange} />
-                                    </div>
-
-                                </div> */}
                                 <h5>NFT Name</h5>
                                 <input type="text" name="item_title"
                                     id="item_title"
                                     className="form-control"
                                     placeholder="e.g. 'Crypto Fix"
                                     onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
+                                    
                                 />
-                                {/* <input
-                                    placeholder="Asset Name"
-                                    className="mt-8 border rounded p-4"
-                                    onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-                                /> */}
                                 <div className="spacer-10"></div>
 
                                 <h5>NFT Description</h5>
@@ -230,12 +222,6 @@ export default function CreateItem() {
 
                                 <div className="spacer-10"></div>
 
-                                {/* <textarea
-                                    placeholder="Asset description"
-                                    className="mt-2 border rounded p-4"
-                                    onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
-                                /> */}
-
                                 <h5>NFT Price</h5>
                                 <input
                                     type="number"
@@ -246,16 +232,11 @@ export default function CreateItem() {
                                     placeholder="enter price for one item (ETH)" />
 
                                 <div className="spacer-10"></div>
-                                {/* <input
-                                    placeholder="Asset Price in Eth"
-                                    className="mt-8 border rounded p-4"
-                                    type="number"
-                                    onChange={e => updateFormInput({ ... , price: e.target.value })}
-                                /> */}
+
                                 <input
                                     type="file"
                                     name="Asset"
-                                    className="my-4"
+                                    className="my-4" id="item_image"
                                     onChange={onChange}
                                 />
                                 {/* {
@@ -272,21 +253,30 @@ export default function CreateItem() {
                           />
                         )
                     } */}
-                                <input
+                                <button
                                     type="button"
                                     id="submit"
-                                    className="btn-main"
+                                    className= {`btn-main ${loading?"disabled":""}`}
                                     value="Create NFT"
                                     onClick={createItem}
-                                // onClick={createItem1}
-                                // onClick={() => navigate(-1)}
-                                />
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center"
+                                    }}
+                                // disabled={formInput}
+                                // onClick={hendleloading} 
+                               > Create Nft
+                                    {loading ? <span className='spinner-border' role="status" style={{ display: "inline-block", margin: "0 14px", width: "1rem", height: "1rem" }}>
+                                        <span className='sr-only'>Loaing...</span>
+                                    </span> : ''}
+                                </button>
+
                                 {/* <button onClick={createItem}
                                     className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
                                 >Create NFT</button> */}
                             </div>
                         </form>
-                        
+
                     </div>
                     <div className="col-lg-3 col-sm-6 col-xs-12">
                         <h5>Preview item</h5>
