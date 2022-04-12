@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import Breakpoint, { BreakpointProvider, setDefaultBreakpoints } from "react-socks";
 import { header } from 'react-bootstrap';
 import { Link } from '@reach/router';
@@ -27,7 +28,7 @@ const NavLink = props => (
 
 
 
-const Header = function () {
+const Header = () => {
 
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openMenu1, setOpenMenu1] = React.useState(false);
@@ -71,7 +72,76 @@ const Header = function () {
   });
 
   const [showmenu, btn_icon] = useState(false);
+  const [count, setCount] = useState(0);
+
+  const [walletAddress, setWalletAddress] = useState('');
+
+  // const [metaAddress, setMetaAddress] = useState(false);
+  // const [data, setdata] = useState({
+  //   address: "",
+  //   Balance: null,
+  // });
+
+  const connectMetaMask = async () => {
+
+    //   // Asking if metamask is already present or not
+    //   if (window.ethereum) {
+
+    //     // res[0] for fetching a first wallet
+    //     window.ethereum
+    //       .request({ method: "eth_requestAccounts" })
+    //       .then((res) => accountChangeHandler(res[0]));
+    //   } else {
+    //     alert("install metamask extension!!");
+    //   }
+    // };
+    try {
+      // Will open the MetaMask UI
+      // You should disable this button while the request is pending!
+      const addr = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      //  if (addr) {
+      //    setMetaAddress = true;
+      //  } 
+      console.log(addr, "csdbckjsbdcjsj")
+      setWalletAddress(addr[0])
+      console.log({ walletAddress: walletAddress })
+    } catch (error) {
+      console.error(error);
+      alert(error)
+    }
+  };
+
+  // getbalance function for getting a balance in
+  // a right format with help of ethers
+  // const getbalance = (address) => {
+
+  //   // Requesting balance method
+  //   window.ethereum
+  //     .request({
+  //       method: "eth_getBalance",
+  //       params: [address, "latest"]
+  //     })
+  //     .then((balance) => {
+  //       // Setting balance
+  //       setdata({
+  //         Balance: ethers.utils.formatEther(balance),
+  //       });
+  //     });
+  // };
+
+  // Function for getting handling all events
+  // const accountChangeHandler = (account) => {
+  //   // Setting an address data
+  //   setdata({
+  //     address: account,
+  //   });
+
+  //   // Setting a balance
+  //   getbalance(account);
+  // };
+
   useEffect(() => {
+    connectMetaMask()
     const header = document.getElementById("myHeader");
     const totop = document.getElementById("scroll-to-top");
     const sticky = header.offsetTop;
@@ -342,8 +412,13 @@ const Header = function () {
           </BreakpointProvider>
 
           <div className='mainside'>
-            <NavLink to="/wallet" className="btn-main">Connect Wallet</NavLink>
+
+            <button className="btn-main" onClick={connectMetaMask} ><span>{`${walletAddress ? `Connected:${walletAddress.substring(0,5)} ...` : 'Connect to wallet'}`}</span>
+            </button>
+            {/* {metaAddress ? (<button className="btn-main">Connected:{data.address}</button>) : (<button onClick={connectMetaMask} className="btn-main">Connect to MetaMask</button>)} */}
+
           </div>
+          {/* <span>{data.address}</span> */}
 
         </div >
 

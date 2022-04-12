@@ -18,6 +18,7 @@ import NFT from '../../NFT.json'
 import { useNavigate } from "@reach/router"
 
 
+
 const Outer = styled.div`
   display: flex;
   justify-content: center;
@@ -77,6 +78,8 @@ export default function ColumnZeroCollection() {
         setLoadingState('loaded')
     }
 
+
+
     // async function buyNFT(nft){
     //     // debugger
     //     const web3Modal = new Web3Modal();
@@ -100,6 +103,11 @@ export default function ColumnZeroCollection() {
     //     loadNFTs()
     //   }
     const navigate = useNavigate();
+
+    async function Redirect () {
+        navigate('../create2', { replace: true })
+
+    }
     console.log(nfts, "nft-------------------------------------------")
     if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets created</h1>)
     return (
@@ -140,7 +148,7 @@ export default function ColumnZeroCollection() {
                                         Price - {nft.price} Eth
                                     </div>
                                     <div className="text-left">
-                                        <button onClick={() => buyNFT(nft)} type="button" className="btn-main"
+                                        <button onClick={() => Redirect()} type="button" className="btn-main"
                                         ><span>Sell</span></button>
                                     </div>
                                     <div className="nft__item_like">
