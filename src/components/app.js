@@ -34,8 +34,10 @@ import Accordion from './pages/accordion';
 import Alerts from './pages/alerts';
 import Progressbar from './pages/progressbar';
 import Tabs from './pages/tabs';
+import CarouselNew from "../components/components/CarouselNew";
 
 import { createGlobalStyle } from 'styled-components';
+import { Carousel } from 'bootstrap';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -102,6 +104,7 @@ const app = () => (
         <Alerts path="/alerts" />
         <Progressbar path="/progressbar" />
         <Tabs path="/tabs" />
+        <CarouselNew path="/ItemJunaid"/>
       </ScrollTop>
     </PosedRouter>
     <ScrollToTopBtn />

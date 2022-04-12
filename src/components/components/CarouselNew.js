@@ -11,8 +11,12 @@ import NFT from '../../NFT.json';
 import Market from '../../NFTMarket.json';
 import { Image } from 'react-bootstrap';
 import { ethers } from 'ethers'
-import { Link } from "react-router-dom";
-import { useNavigate } from "@reach/router"
+import { Link ,useNavigate} from "react-router-dom";
+import { navigate } from "@reach/router"
+import { Navigate } from 'react-router-dom'
+
+
+
 
 
 const Outer = styled.div`
@@ -21,8 +25,6 @@ const Outer = styled.div`
   align-content: center;
   align-items: center;
 `;
-
-
 
 class CustomSlide extends Component {
     render() {
@@ -34,14 +36,26 @@ class CustomSlide extends Component {
 
     }
 }
+        // const { index, ...props } = this.props;
+// console.log()
 
-export default class Responsive extends Component {
+class Responsive extends Component {
+  
     constructor(props) {
         super(props);
-        this.state = { timer: { deadline: "January, 10, 2022", deadline1: "February, 10, 2022", deadline2: "February, 1, 2022", height: 0 }, nftList: [] };
+        this.state = { timer: { deadline: "January, 10, 2022", deadline1: "February, 10, 2022", deadline2: "February, 1, 2022", height: 0 }, nftList: [] , redirect: false};
         this.onImgLoad = this.onImgLoad.bind(this);
+        
     }
-
+    setRedirect = () => {
+        // this.setState({
+        //   redirect: true
+        // })
+        // if (this.state.redirect) {
+        //     return <Navigate to='/ItemDetail' />
+        //   }
+        navigate('/ItemDetail')
+      }
 
     onImgLoad({ target: img }) {
         let currentHeight = this.state.timer.height;
@@ -55,6 +69,7 @@ export default class Responsive extends Component {
         this.loadNFTs()
 
     }
+    
 
     async loadNFTs() {
         const web3Modal = new Web3Modal(
@@ -63,12 +78,12 @@ export default class Responsive extends Component {
                 cacheProvider: true,
             }
         )
-
+        
         const connection = await web3Modal.connect()
         const provider = new ethers.providers.Web3Provider(connection)
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider);
-
+        
         //return an array of unsold market items
         const data = await marketContract.fetchMarketItems();
         console.log(data, "data----------44")
@@ -99,7 +114,9 @@ export default class Responsive extends Component {
             // setLoadingState('loaded')
         })
     }
+    
     async buyNFT(nft) {
+        
         const web3Modal = await new Web3Modal();
         const connection = await web3Modal.connect();
         const provider = new ethers.providers.Web3Provider(connection);
@@ -120,12 +137,19 @@ export default class Responsive extends Component {
         loadNFTs()
     }
     nftClickHandler(nft) {
+        this.setState({
+            redirect: true
+          })
+        
         // console.log(nft)
         localStorage.setItem('SingleNFT', JSON.stringify(nft));
-        window.open("/ItemDetail", "_self")
+       
+        // window.open("/ItemDetail", "_self")
+        // useNavigate('/ItemDetail', { replace: true })
 
     }
     render() {
+      
         var settings = {
             infinite: false,
             speed: 500,
@@ -204,7 +228,7 @@ export default class Responsive extends Component {
                                                 style={{ maxWidth: 250, maxHeight: 170 }}
                                                 className="lazy nft__item_preview img-responsive cursor-pointer"
                                                 onLoad={this.onImgLoad} alt=""
-                                                onClick={() => this.nftClickHandler(nft)}
+                                                onClick={() => `${this.nftClickHandler(nft)} && ${this.setRedirect()}`}
                                             />
 
 
@@ -236,3 +260,6 @@ export default class Responsive extends Component {
         );
     }
 }
+
+
+export default Responsive;
