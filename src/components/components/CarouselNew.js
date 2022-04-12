@@ -224,7 +224,7 @@ class Responsive extends Component {
                                         <Outer>
 
                                             <img src={nft.image}
-                                                style={{ maxWidth: 250, maxHeight: 170 }}
+                                                style={{ maxWidth: 250, maxHeight: 170 ,cursor: "pointer"}}
                                                 className="lazy nft__item_preview img-responsive cursor-pointer"
                                                 onLoad={this.onImgLoad} alt=""
                                                 onClick={() => `${this.nftClickHandler(nft)}`}

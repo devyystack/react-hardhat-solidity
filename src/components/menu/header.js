@@ -107,7 +107,7 @@ const Header = () => {
       console.log({ walletAddress: walletAddress })
     } catch (error) {
       console.error(error);
-      alert(error)
+      // alert(error)
     }
   };
 
@@ -142,6 +142,7 @@ const Header = () => {
 
   useEffect(() => {
     connectMetaMask()
+    
     const header = document.getElementById("myHeader");
     const totop = document.getElementById("scroll-to-top");
     const sticky = header.offsetTop;
@@ -230,12 +231,12 @@ const Header = () => {
                         <div className='item-dropdown'>
                           <div className="dropdown" onClick={closeMenu1}>
                             {/* <NavLink to="/explore" onClick={() => btn_icon(!showmenu)}>Explore</NavLink> */}
-                            <NavLink to="/explore2" onClick={() => btn_icon(!showmenu)}>Explore 2</NavLink>
-                            <NavLink to="/rangking" onClick={() => btn_icon(!showmenu)}>Rangking</NavLink>
+                            {/* <NavLink to="/explore2" onClick={() => btn_icon(!showmenu)}>Explore 2</NavLink> */}
+                            {/* <NavLink to="/rangking" onClick={() => btn_icon(!showmenu)}>Rangking</NavLink> */}
                             <NavLink to="/colection" onClick={() => btn_icon(!showmenu)}>Collection</NavLink>
-                            <NavLink to="/ItemDetail" onClick={() => btn_icon(!showmenu)}>Items Details</NavLink>
-                            <NavLink to="/Auction" onClick={() => btn_icon(!showmenu)}>Live Auction</NavLink>
-                            <NavLink to="/helpcenter" onClick={() => btn_icon(!showmenu)}>Help Center</NavLink>
+                            {/* <NavLink to="/ItemDetail" onClick={() => btn_icon(!showmenu)}>Items Details</NavLink> */}
+                            {/* <NavLink to="/Auction" onClick={() => btn_icon(!showmenu)}>Live Auction</NavLink> */}
+                            {/* <NavLink to="/helpcenter" onClick={() => btn_icon(!showmenu)}>Help Center</NavLink> */}
                           </div>
                         </div>
                       )}
@@ -243,9 +244,9 @@ const Header = () => {
                   </div>
 
                   <div className='navbar-item'>
-                    <NavLink to="/activity" onClick={() => btn_icon(!showmenu)}>
+                    {/* <NavLink to="/activity" onClick={() => btn_icon(!showmenu)}>
                       Activity
-                    </NavLink>
+                    </NavLink> */}
                   </div>
                   <div className='navbar-item'>
                     <div ref={ref2}>
@@ -257,17 +258,17 @@ const Header = () => {
                       {openMenu2 && (
                         <div className='item-dropdown'>
                           <div className="dropdown" onClick={closeMenu2}>
-                            <NavLink to="/Author" onClick={() => btn_icon(!showmenu)}>Author</NavLink>
-                            <NavLink to="/wallet" onClick={() => btn_icon(!showmenu)}>Wallet</NavLink>
+                            {/* <NavLink to="/Author" onClick={() => btn_icon(!showmenu)}>Author</NavLink> */}
+                            {/* <NavLink to="/wallet" onClick={() => btn_icon(!showmenu)}>Wallet</NavLink> */}
                             <NavLink to="/create" onClick={() => btn_icon(!showmenu)}>Create</NavLink>
-                            <NavLink to="/create2" onClick={() => btn_icon(!showmenu)}>Create 2</NavLink>
-                            <NavLink to="/createOptions" onClick={() => btn_icon(!showmenu)}>Create options</NavLink>
-                            <NavLink to="/news" onClick={() => btn_icon(!showmenu)}>News</NavLink>
-                            <NavLink to="/works" onClick={() => btn_icon(!showmenu)}>Gallery</NavLink>
-                            <NavLink to="/login" onClick={() => btn_icon(!showmenu)}>login</NavLink>
+                            {/* <NavLink to="/create2" onClick={() => btn_icon(!showmenu)}>Create 2</NavLink> */}
+                            {/* <NavLink to="/createOptions" onClick={() => btn_icon(!showmenu)}>Create options</NavLink> */}
+                            {/* <NavLink to="/news" onClick={() => btn_icon(!showmenu)}>News</NavLink> */}
+                            {/* <NavLink to="/works" onClick={() => btn_icon(!showmenu)}>Gallery</NavLink> */}
+                            {/* <NavLink to="/login" onClick={() => btn_icon(!showmenu)}>login</NavLink> */}
                             {/* <NavLink to="/loginTwo" onClick={() => btn_icon(!showmenu)}>login 2</NavLink> */}
-                            <NavLink to="/register" onClick={() => btn_icon(!showmenu)}>Register</NavLink>
-                            <NavLink to="/contact" onClick={() => btn_icon(!showmenu)}>Contact Us</NavLink>
+                            {/* <NavLink to="/register" onClick={() => btn_icon(!showmenu)}>Register</NavLink> */}
+                            {/* <NavLink to="/contact" onClick={() => btn_icon(!showmenu)}>Contact Us</NavLink> */}
                           </div>
                         </div>
                       )}
@@ -338,12 +339,12 @@ const Header = () => {
                         <div className='item-dropdown'>
                           <div className="dropdown" onClick={closeMenu1}>
                             {/* <NavLink to="/explore">Explore</NavLink> */}
-                            <NavLink to="/explore2">Explore 2</NavLink>
-                            <NavLink to="/rangking">Rangking</NavLink>
+                            {/* <NavLink to="/explore2">Explore 2</NavLink> */}
+                            {/* <NavLink to="/rangking">Rangking</NavLink> */}
                             <NavLink to="/colection">Collection</NavLink>
-                            <NavLink to="/ItemDetail">Items Details</NavLink>
-                            <NavLink to="/Auction">Live Auction</NavLink>
-                            <NavLink to="/helpcenter">Help Center</NavLink>
+                            {/* <NavLink to="/ItemDetail">Items Details</NavLink> */}
+                            {/* <NavLink to="/Auction">Live Auction</NavLink> */}
+                            {/* <NavLink to="/helpcenter">Help Center</NavLink> */}
                           </div>
                         </div>
                       )}
@@ -353,10 +354,10 @@ const Header = () => {
                 </div>
 
                 <div className='navbar-item'>
-                  <NavLink to="/activity">
+                  {/* <NavLink to="/activity">
                     Activity
                     <span className='lines'></span>
-                  </NavLink>
+                  </NavLink> */}
                 </div>
                 <div className='navbar-item'>
                   <div ref={ref2}>
@@ -367,17 +368,17 @@ const Header = () => {
                       {openMenu2 && (
                         <div className='item-dropdown'>
                           <div className="dropdown" onClick={closeMenu2}>
-                            <NavLink to="/Author">Author</NavLink>
-                            <NavLink to="/wallet">Wallet</NavLink>
+                            {/* <NavLink to="/Author">Author</NavLink> */}
+                            {/* <NavLink to="/wallet">Wallet</NavLink> */}
                             <NavLink to="/create">Create</NavLink>
-                            <NavLink to="/create2">Create 2</NavLink>
-                            <NavLink to="/createOptions">Create Option</NavLink>
-                            <NavLink to="/news">News</NavLink>
-                            <NavLink to="/works">Gallery</NavLink>
-                            <NavLink to="/login">login</NavLink>
+                            {/* <NavLink to="/create2">Create 2</NavLink> */}
+                            {/* <NavLink to="/createOptions">Create Option</NavLink> */}
+                            {/* <NavLink to="/news">News</NavLink> */}
+                            {/* <NavLink to="/works">Gallery</NavLink> */}
+                            {/* <NavLink to="/login">login</NavLink> */}
                             {/* <NavLink to="/loginTwo">login 2</NavLink> */}
-                            <NavLink to="/register">Register</NavLink>
-                            <NavLink to="/contact">Contact Us</NavLink>
+                            {/* <NavLink to="/register">Register</NavLink> */}
+                            {/* <NavLink to="/contact">Contact Us</NavLink> */}
                           </div>
                         </div>
                       )}
