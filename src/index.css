@@ -11,3 +11,104 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+/* auther list */
+
+.__author_list {
+  display: flex;
+  column-count: 3;
+  gap: 10px 10px;
+  flex-wrap: wrap
+}
+
+.__author_list li {
+  list-style: none;
+  min-height: 50px;
+  border: 1px solid #f7f2f2;
+
+}
+
+.__author_list li:hover {
+  box-shadow: 0 3px 8px 1px #f7f2f2
+}
+
+.__author_list ._pi-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 2px;
+}
+
+.__author_list ._pi-wrapper ._profile-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  /* border: 1px solid; */
+  background-color: #f5f5f5;
+}
+
+._profile-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.__author_list ._pi-wrapper .info {
+  width: 50%;
+}
+
+.__author_list ._pi-wrapper .info p {
+  font-weight: 800;
+  font-size: 12px;
+  /* max-width: 50%; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+/* auther list */

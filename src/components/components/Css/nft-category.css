@@ -1,0 +1,73 @@
+.us-form select {
+    position: relative;
+    -webkit-appearance: button;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    height: 2.2em;
+    margin: 2px;
+    padding: 0.3em 0.6em;
+    background: saddlebrown;
+    border: 1px solid #aaaaaa;
+    border-radius: 0.3em;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.85em;
+    font-weight: normal;
+    overflow: hidden;
+    text-shadow: 0 1px 0 white;
+    -webkit-transition: box-shadow 200ms, border-color 200ms;
+    -moz-transition: box-shadow 200ms, border-color 200ms;
+    transition: box-shadow 200ms, border-color 200ms;
+    white-space: nowrap; 
+  }
+  .us-form select option {
+    text-shadow: none; 
+  }
+  .us-form select:disabled, .us-form select:disabled:hover {
+    color: #cccccc !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important; 
+  }
+  .us-form select.error {
+    color: #bf212e;
+    border-color: #bf212e; 
+  }
+  .us-form select.input-big {
+    font-size: 17px; 
+  }
+  .us-form.error select, .us-form .error select {
+    color: #bf212e;
+    border-color: #bf212e; 
+  }
+  
+  .boxshadow .us-form select:not([size]):focus {
+    outline: none;
+    border-color: #66ccff;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 4px #66ccff; 
+  }
+  .boxshadow.no-touch .us-form select:not([size]):hover {
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 3px #ffff88; 
+  }
+  
+  .cssgradients .us-form select:not([size]) {
+    border-color: #ececec;
+    background-color: #ececec;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #ececec));
+    background-image: -webkit-linear-gradient(top, white, #ececec);
+    background-image: -moz-linear-gradient(top, white, #ececec);
+    background-image: -ms-linear-gradient(top, white, #ececec);
+    background-image: -o-linear-gradient(top, white, #ececec);
+    background-image: linear-gradient(top, white, #ececec); 
+  }
+  .cssgradients .us-form select:not([size]).focus {
+    border-color: #66ccff; 
+  }
+  .cssgradients .us-form select:not([size]).error {
+    border-color: #bf212e; 
+  }
+  .cssgradients .us-form.error select, .cssgradients .us-form .error select {
+    border-color: #bf212e; 
+  }
+  

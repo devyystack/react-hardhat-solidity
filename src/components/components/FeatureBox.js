@@ -24,10 +24,10 @@ const featurebox= () => (
                   </Reveal>
                     <div className="text">
                       <Reveal className='onStep' keyframes={fadeInUp} delay={100} duration={600} triggerOnce>
-                        <h4 className="">Set up your wallet</h4>
+                        <h4 className="">NFCB (Non-Fungible Certified Brand)</h4>
                       </Reveal>
                       <Reveal className='onStep' keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                        <p className="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                        <p className="">Certify your products with a Non-Fungible token. You can add more value and authenticity to your products with a NFCB.</p>
                       </Reveal>
                     </div>
                     <i className="wm icon_wallet"></i>
@@ -44,7 +44,7 @@ const featurebox= () => (
                       <h4 className="">Add your NFT's</h4>
                     </Reveal>
                     <Reveal className='onStep' keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                      <p className="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                      <p className="">NFTs are easy to add on our marketplace. Just fill out the information on the “Create Options” form under the Pages tab on the menu above.</p>
                     </Reveal>
                   </div>
                   <i className="wm icon_cloud-upload_alt"></i>
@@ -61,7 +61,7 @@ const featurebox= () => (
                       <h4 className="">Sell your NFT's</h4>
                     </Reveal>
                     <Reveal className='onStep' keyframes={fadeInUp} delay={200} duration={600} triggerOnce>
-                      <p className="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                      <p className="">Not much to do here but wait for the clock to tick down to zero if your NFT is being bidded upon or scream yippee after someone has made a purchase.</p>
                     </Reveal>
                   </div>
                   <i className="wm icon_tags_alt"></i>

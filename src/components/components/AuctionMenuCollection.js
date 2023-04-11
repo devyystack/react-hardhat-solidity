@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Web3Modal from "web3modal"
-// import { nftaddress, nftmarketaddress } from '../components/../../config';
+// import { nftaddress, nftmarketaddress } from '../../config';
 // import NFT from '../../NFT.json';
-import {NFT,NFT_MARKET}from './../../constants/contract.config'
+// import {NFT} from '../../constants';
 // import Market from '../../NFTMarket.json';
+import { NFT_MARKET ,NFT} from '../../constants/contract.config';
 import { Image } from 'react-bootstrap';
 import { navigate } from "@reach/router"
 import { URLS } from '../app-url'
@@ -21,7 +22,7 @@ const Outer = styled.div`
   border-radius: 8px;
 `;
 
-export default function ColumnZeroTwo() {
+export default function AuctionMenuCollection() {
   const [nfts, setNfts] = useState([]);
   const [sold, setSold] = useState([]);
   const [loadingState, setLoadingState] = useState('not-loaded');
@@ -104,7 +105,7 @@ export default function ColumnZeroTwo() {
       getAccount().then((response) => {
         setAccountAddress(response);
         axios
-          .get(URLS.getOnSaleNftCollection + "/" + response)
+          .get(URLS.getOnAuctionNFTCollection + "/" + response)
           // .get(`http://3.133.29.104:8000/app/getCollection/${response}`)
           .then((res) => {
             setPosts(res.data.result);
@@ -195,7 +196,6 @@ export default function ColumnZeroTwo() {
 
 
   async function buyNFT(nft) {
-    
     // debugger
     // console.log(nft, "--------------nft---------------------")
 
@@ -211,8 +211,7 @@ export default function ColumnZeroTwo() {
     const price = ethers.utils.parseUnits(nft.nftPrice.toString(), 'ether');
 
     //make the sale
-    // console.log(nftaddress) 
-    const transaction = await contract.createMarketSale(NFT.NFT_ADDRESS.toLowerCase(), nft.tokenId, {
+    const transaction = await contract.createMarketSale(NFT.NFT_ADDRESS, nft.tokenId, {
       value: price,
       gasLimit: 3000000,
       // gasPrice: 8000000
@@ -238,15 +237,24 @@ export default function ColumnZeroTwo() {
     // console.log(nft, "ColumnZeroTwo---- Nft---------  224-----40")
   }
 
-
   if (loadingState === 'loaded' && !nfts.length) return (
     <h1 className="px-20 py-10 text-3xl">No items in market place</h1>
   )
 
+  const bidNFT = (nft)=> {
+    // console.log(nft);
+    navigate('/create2', {
+        state:{
+            NFT: nft,
+            bid: true, 
+        }
+    })
+  }
+
   return (
 
     <div className='row'>
-      <h2 className="text-2xl py-2 text-center">NFT BUYING </h2>
+      <h2 className="text-2xl py-2 text-center">NFT AUCTION </h2>
 
       {
         posts?.map((nft, i) => (
@@ -278,20 +286,20 @@ export default function ColumnZeroTwo() {
                   </Outer>
                 </div>
 
-                <div className="nft__item_info">
+                <div className="nft__item_info pb-3">
                   <span>{nft.nftName}</span>
 
                   <div className="nft__item_price">
                     Price - {nft.nftPrice} BNB
                   </div>
                   <div className="text-left">
-                    <button onClick={() => buyNFT(nft)} type="button" className="btn-main"
-                    ><span>Buy NFT</span></button>
+                    <button onClick={() => bidNFT(nft)} type="button" className="btn-main"
+                    ><span>BID</span></button>
                   </div>
-                  <div className="nft__item_like">
+                  {/* <div className="nft__item_like">
                     <i className="fa fa-heart" />
 
-                  </div>
+                  </div> */}
 
                 </div>
               </div>

@@ -1,61 +1,79 @@
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import Breakpoint, { BreakpointProvider, setDefaultBreakpoints } from "react-socks";
-import { header } from 'react-bootstrap';
-import { Link } from '@reach/router';
+import Breakpoint, {
+  BreakpointProvider,
+  setDefaultBreakpoints,
+} from "react-socks";
+import { Link } from "@reach/router";
 import useOnclickOutside from "react-cool-onclickoutside";
 import logo from "../../assets/logo.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { URLS } from "../app-url";
 
+let METABTN;
 
-setDefaultBreakpoints([
-  { xs: 0 },
-  { l: 1199 },
-  { xl: 1200 }
-]);
+setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
-const NavLink = props => (
+toast.configure();
+const NavLink = (props) => (
   <Link
     {...props}
     getProps={({ isCurrent }) => {
-      // the object returned here is passed to the
-      // anchor element's props
       return {
-        className: isCurrent ? 'active' : 'non-active',
+        className: isCurrent ? "active" : "non-active",
       };
     }}
   />
 );
 
-
+async function getAccount() {
+  let accounts;
+  try {
+    accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const account = accounts[0];
+    return account;
+  } catch (error) {
+    toast.warn("Please Install Metamask Wallet Extension");
+    // console.log(error)
+  }
+}
 
 const Header = () => {
-
+  const [waladdress, setWalAddress] = useState(
+    "0xC03E118eA1a055f909C0dDa77A47F130f07031CE"
+  );
+  const [accountAddress, setAccountAddress] = useState("");
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openMenu1, setOpenMenu1] = React.useState(false);
   const [openMenu2, setOpenMenu2] = React.useState(false);
   const [openMenu3, setOpenMenu3] = React.useState(false);
+  const [User, setUser] = useState([]);
+
   const handleBtnClick = () => {
     setOpenMenu(!openMenu);
   };
-  const handleBtnClick1 = (): void => {
+  const handleBtnClick1 = () => {
     setOpenMenu1(!openMenu1);
   };
-  const handleBtnClick2 = (): void => {
+  const handleBtnClick2 = () => {
     setOpenMenu2(!openMenu2);
   };
-  const handleBtnClick3 = (): void => {
+  const handleBtnClick3 = () => {
     setOpenMenu3(!openMenu3);
   };
-  const closeMenu = (): void => {
+  const closeMenu = () => {
     setOpenMenu(false);
   };
-  const closeMenu1 = (): void => {
+  const closeMenu1 = () => {
     setOpenMenu1(false);
   };
-  const closeMenu2 = (): void => {
+  const closeMenu2 = () => {
     setOpenMenu2(false);
   };
-  const closeMenu3 = (): void => {
+  const closeMenu3 = () => {
     setOpenMenu3(false);
   };
   const ref = useOnclickOutside(() => {
@@ -74,75 +92,48 @@ const Header = () => {
   const [showmenu, btn_icon] = useState(false);
   const [count, setCount] = useState(0);
 
-  const [walletAddress, setWalletAddress] = useState('');
+  const disconnectMeta = () => {
+    setAccountAddress("");
+    // alert(accounts)
+  };
 
-  // const [metaAddress, setMetaAddress] = useState(false);
-  // const [data, setdata] = useState({
-  //   address: "",
-  //   Balance: null,
-  // });
+  const connectButtonOnClick = () => {
+    // debugger
+    if (window.ethereum.chainId === "0x38") {
+      // console.log(window,"----------window-----------")
 
-  const connectMetaMask = async () => {
-
-    //   // Asking if metamask is already present or not
-    //   if (window.ethereum) {
-
-    //     // res[0] for fetching a first wallet
-    //     window.ethereum
-    //       .request({ method: "eth_requestAccounts" })
-    //       .then((res) => accountChangeHandler(res[0]));
-    //   } else {
-    //     alert("install metamask extension!!");
-    //   }
-    // };
-    try {
-      // Will open the MetaMask UI
-      // You should disable this button while the request is pending!
-      const addr = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      //  if (addr) {
-      //    setMetaAddress = true;
-      //  } 
-      console.log(addr, "csdbckjsbdcjsj")
-      setWalletAddress(addr[0])
-      console.log({ walletAddress: walletAddress })
-    } catch (error) {
-      console.error(error);
-      // alert(error)
+      getAccount().then((response) => {
+        setAccountAddress(response);
+      });
+    } else {
+      toast.warn("Please Connect to BSC Mainnet Network!!!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
-  // getbalance function for getting a balance in
-  // a right format with help of ethers
-  // const getbalance = (address) => {
+  useEffect(() => {
+    axios
+      .get(URLS.getCategoryList)
+      .then((res) => {
+        if (res.data.result) {
+          const catName = res.data.result[0].categoryName;
+          const catId = res.data.result[0]._id;
 
-  //   // Requesting balance method
-  //   window.ethereum
-  //     .request({
-  //       method: "eth_getBalance",
-  //       params: [address, "latest"]
-  //     })
-  //     .then((balance) => {
-  //       // Setting balance
-  //       setdata({
-  //         Balance: ethers.utils.formatEther(balance),
-  //       });
-  //     });
-  // };
-
-  // Function for getting handling all events
-  // const accountChangeHandler = (account) => {
-  //   // Setting an address data
-  //   setdata({
-  //     address: account,
-  //   });
-
-  //   // Setting a balance
-  //   getbalance(account);
-  // };
+          let user_info = { categoryname: catName, categoryid: catId };
+        }
+        setUser(res.data.result);
+      })
+      .catch((err) => { });
+  }, []);
 
   useEffect(() => {
-    connectMetaMask()
-    
+    getAccount().then((data) => {
+      if (data) {
+        connectButtonOnClick();
+      }
+    }, []);
+
     const header = document.getElementById("myHeader");
     const totop = document.getElementById("scroll-to-top");
     const sticky = header.offsetTop;
@@ -151,11 +142,11 @@ const Header = () => {
       if (window.pageYOffset > sticky) {
         header.classList.add("sticky");
         totop.classList.add("show");
-
       } else {
         header.classList.remove("sticky");
         totop.classList.remove("show");
-      } if (window.pageYOffset > sticky) {
+      }
+      if (window.pageYOffset > sticky) {
         closeMenu();
       }
     });
@@ -163,18 +154,40 @@ const Header = () => {
       window.removeEventListener("scroll", scrollCallBack);
     };
   }, []);
+  const address = "0xC03E118eA1a055f909C0dDa77A47F130f07031CE";
+
+  //
+  if (!accountAddress) {
+    METABTN = (
+      <button
+        variant="contained"
+        className="btn-main"
+        onClick={connectButtonOnClick}
+      >
+        {!!accountAddress
+          ? `Connected:${accountAddress.substring(0, 5)}...`
+          : "Connect Wallet"}
+      </button>
+    );
+  } else {
+    METABTN = (
+      <button
+        className="btn-main"
+        onClick={disconnectMeta}
+      >{` ${accountAddress.substring(0, 10)}...Disconnect`}</button>
+    );
+  }
+
+  //
+
   return (
-    <header id="myHeader" className='navbar white'>
-      <div className='container'>
-        <div className='row w-100-nav'>
-          <div className='logo px-0'>
-            <div className='navbar-title navbar-item'>
+    <header id="myHeader" className="navbar white">
+      <div className="container">
+        <div className="row w-100-nav">
+          <div className="logo px-0">
+            <div className="navbar-title navbar-item">
               <NavLink to="/">
-                <img
-                  src={logo}
-                  className="img-fluid d-block"
-                  alt="#"
-                />
+                <img src={logo} className="img-fluid d-block" alt="#" />
                 <img
                   src={logo}
                   // src="./img/logo-2.png"
@@ -191,246 +204,188 @@ const Header = () => {
             </div>
           </div>
 
-          <div className='search'>
-            <input id="quick_search" className="xs-hide" name="quick_search" placeholder="search item here..." type="text" />
-          </div>
-
           <BreakpointProvider>
             <Breakpoint l down>
-              {showmenu &&
-                <div className='menu'>
-                  <div className='navbar-item'>
+              {showmenu && (
+                <div className="menu">
+                  <div className="navbar-item">
                     <div ref={ref}>
-                      <div className="dropdown-custom dropdown-toggle btn"
+                      <div
+                        className="dropdown-custom dropdown-toggle btn"
                         onClick={handleBtnClick}
                       >
                         Home
                       </div>
                       {openMenu && (
-                        <div className='item-dropdown'>
-                          <div className="dropdown" onClick={closeMenu}>
-                            {/* <NavLink to=" " onClick={() => window.open("http://gigaland.grey.on3-step.com", "_self")}>New Grey Scheme</NavLink> */}
-                            {/* <NavLink to=" " onClick={() => window.open("http://gigaland.retro.on3-step.com", "_self")}>New Retro Scheme</NavLink> */}
-                            {/* <NavLink to="/" onClick={() => btn_icon(!showmenu)}>Homepage</NavLink> */}
-                            {/* <NavLink to="/home1" onClick={() => btn_icon(!showmenu)}>Homepage 1</NavLink> */}
-                            {/* <NavLink to="/home2" onClick={() => btn_icon(!showmenu)}>Homepage 2</NavLink> */}
-                            {/* <NavLink to="/home3" onClick={() => btn_icon(!showmenu)}>Homepage 3</NavLink> */}
-                          </div>
+                        <div className="item-dropdown">
+                          <div className="dropdown" onClick={closeMenu}></div>
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className='navbar-item'>
+                  <div>
+                    {User.map((data, index) => (
+                      <div key={index} className="navbar-item">
+                        <div key={index} ref={ref2}>
+                          <NavLink key={index} to={`category/${data._id}`}>
+                            {data.categoryName}
+                            <span className="lines"></span>
+                          </NavLink>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="navbar-item">
                     <div ref={ref1}>
-                      <div className="dropdown-custom dropdown-toggle btn"
+                      <div
+                        className="dropdown-custom dropdown-toggle btn"
                         onClick={handleBtnClick1}
                       >
                         Explore
                       </div>
                       {openMenu1 && (
-                        <div className='item-dropdown'>
+                        <div className="item-dropdown">
                           <div className="dropdown" onClick={closeMenu1}>
-                            {/* <NavLink to="/explore" onClick={() => btn_icon(!showmenu)}>Explore</NavLink> */}
-                            {/* <NavLink to="/explore2" onClick={() => btn_icon(!showmenu)}>Explore 2</NavLink> */}
-                            {/* <NavLink to="/rangking" onClick={() => btn_icon(!showmenu)}>Rangking</NavLink> */}
-                            <NavLink to="/colection" onClick={() => btn_icon(!showmenu)}>Collection</NavLink>
-                            {/* <NavLink to="/ItemDetail" onClick={() => btn_icon(!showmenu)}>Items Details</NavLink> */}
-                            {/* <NavLink to="/Auction" onClick={() => btn_icon(!showmenu)}>Live Auction</NavLink> */}
-                            {/* <NavLink to="/helpcenter" onClick={() => btn_icon(!showmenu)}>Help Center</NavLink> */}
+                            <NavLink
+                              to="/colection"
+                              onClick={() => btn_icon(!showmenu)}
+                            >
+                              Collection
+                            </NavLink>
                           </div>
                         </div>
                       )}
                     </div>
                   </div>
 
-                  <div className='navbar-item'>
-                    {/* <NavLink to="/activity" onClick={() => btn_icon(!showmenu)}>
-                      Activity
-                    </NavLink> */}
-                  </div>
-                  <div className='navbar-item'>
+                  <div className="navbar-item"></div>
+                  <div className="navbar-item">
                     <div ref={ref2}>
-                      <div className="dropdown-custom dropdown-toggle btn"
+                      <div
+                        className="dropdown-custom dropdown-toggle btn"
                         onClick={handleBtnClick2}
                       >
                         Pages
                       </div>
                       {openMenu2 && (
-                        <div className='item-dropdown'>
+                        <div className="item-dropdown">
                           <div className="dropdown" onClick={closeMenu2}>
-                            {/* <NavLink to="/Author" onClick={() => btn_icon(!showmenu)}>Author</NavLink> */}
-                            {/* <NavLink to="/wallet" onClick={() => btn_icon(!showmenu)}>Wallet</NavLink> */}
-                            <NavLink to="/create" onClick={() => btn_icon(!showmenu)}>Create</NavLink>
-                            {/* <NavLink to="/create2" onClick={() => btn_icon(!showmenu)}>Create 2</NavLink> */}
-                            {/* <NavLink to="/createOptions" onClick={() => btn_icon(!showmenu)}>Create options</NavLink> */}
-                            {/* <NavLink to="/news" onClick={() => btn_icon(!showmenu)}>News</NavLink> */}
-                            {/* <NavLink to="/works" onClick={() => btn_icon(!showmenu)}>Gallery</NavLink> */}
-                            {/* <NavLink to="/login" onClick={() => btn_icon(!showmenu)}>login</NavLink> */}
-                            {/* <NavLink to="/loginTwo" onClick={() => btn_icon(!showmenu)}>login 2</NavLink> */}
-                            {/* <NavLink to="/register" onClick={() => btn_icon(!showmenu)}>Register</NavLink> */}
-                            {/* <NavLink to="/contact" onClick={() => btn_icon(!showmenu)}>Contact Us</NavLink> */}
+                            {"0xC03E118eA1a055f909C0dDa77A47F130f07031CE" ==
+                              "0xC03E118eA1a055f909C0dDa77A47F130f07031CE" ? (
+                              <NavLink
+                                to="/create"
+                                onClick={() => btn_icon(!showmenu)}
+                              >
+                                Create
+                              </NavLink>
+                            ) : (
+                              ""
+                            )}
+
+                            {accountAddress ? (
+                              <NavLink to="/userprofile">Profile</NavLink>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       )}
                     </div>
                   </div>
-                  {/* <div className='navbar-item'>
-                    <div ref={ref3}>
-                      <div className="dropdown-custom dropdown-toggle btn"
-                        onClick={handleBtnClick3}
-                      >
-                        Element
-                      </div>
-                      {openMenu3 && (
-                        <div className='item-dropdown'>
-                          <div className="dropdown" onClick={closeMenu3}>
-                            <NavLink to="/elegantIcons" onClick={() => btn_icon(!showmenu)}>Elegant Icon</NavLink>
-                            <NavLink to="/etlineIcons" onClick={() => btn_icon(!showmenu)}>Etline Icon</NavLink>
-                            <NavLink to="/fontAwesomeIcons" onClick={() => btn_icon(!showmenu)}>Font Awesome Icon</NavLink>
-                            <NavLink to="/accordion" onClick={() => btn_icon(!showmenu)}>Accordion</NavLink>
-                            <NavLink to="/alerts" onClick={() => btn_icon(!showmenu)}>Alerts</NavLink>
-                            <NavLink to="/price" onClick={() => btn_icon(!showmenu)}>Pricing Table</NavLink>
-                            <NavLink to="/progressbar" onClick={() => btn_icon(!showmenu)}>Progress bar</NavLink>
-                            <NavLink to="/tabs" onClick={() => btn_icon(!showmenu)}>Tabs</NavLink>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div> */}
                 </div>
-              }
+              )}
             </Breakpoint>
 
             <Breakpoint xl>
-              <div className='menu'>
-                <div className='navbar-item'>
+              <div className="menu">
+                <div className="navbar-item">
                   <NavLink to="/">
                     Home
-                    <span className='lines'></span>
+                    <span className="lines"></span>
                   </NavLink>
-                  {/* <div ref={ref}>
-                    <div className="dropdown-custom dropdown-toggle btn"
-                      onMouseEnter={handleBtnClick} onMouseLeave={closeMenu}>
-                      Home
-                      <span className='lines'></span> */}
-                  {/* {openMenu && (
-                        <div className='item-dropdown'>
-                          <div className="dropdown" onClick={closeMenu}>
-                            <NavLink to=" " onClick={() => window.open("http://gigaland.grey.on3-step.com", "_self")}>New Grey Scheme</NavLink> */}
-                  {/* <NavLink to=" " onClick={() => window.open("http://gigaland.retro.on3-step.com", "_self")}>New Retro Scheme</NavLink> */}
-                  {/* <NavLink to="/">Homepage</NavLink> */}
-                  {/* <NavLink to="/home1">Homepage 1</NavLink> */}
-                  {/* <NavLink to="/home2">Homepage 2</NavLink> */}
-                  {/* <NavLink to="/home3">Homepage 3</NavLink> */}
-                  {/* </div> */}
-                  {/* </div> */}
-                  {/* )} */}
-                  {/* </div>
-
-                  </div> */}
                 </div>
-                <div className='navbar-item'>
+                <div>
+                  {User.map((data, i) => (
+                    <div key={i} className="navbar-item">
+                      <NavLink key={i} to={`category/${data._id}`}>
+                        {data.categoryName}
+                        <span className="lines"></span>
+                      </NavLink>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="navbar-item">
                   <div ref={ref1}>
-                    <div className="dropdown-custom dropdown-toggle btn"
-                      onMouseEnter={handleBtnClick1} onMouseLeave={closeMenu1}>
+                    <div
+                      className="dropdown-custom dropdown-toggle btn"
+                      onMouseEnter={handleBtnClick1}
+                      onMouseLeave={closeMenu1}
+                    >
                       Explore
-                      <span className='lines'></span>
+                      <span className="lines"></span>
                       {openMenu1 && (
-                        <div className='item-dropdown'>
+                        <div className="item-dropdown">
                           <div className="dropdown" onClick={closeMenu1}>
-                            {/* <NavLink to="/explore">Explore</NavLink> */}
-                            {/* <NavLink to="/explore2">Explore 2</NavLink> */}
-                            {/* <NavLink to="/rangking">Rangking</NavLink> */}
                             <NavLink to="/colection">Collection</NavLink>
-                            {/* <NavLink to="/ItemDetail">Items Details</NavLink> */}
-                            {/* <NavLink to="/Auction">Live Auction</NavLink> */}
-                            {/* <NavLink to="/helpcenter">Help Center</NavLink> */}
                           </div>
                         </div>
                       )}
                     </div>
-
                   </div>
                 </div>
 
-                <div className='navbar-item'>
-                  {/* <NavLink to="/activity">
-                    Activity
-                    <span className='lines'></span>
-                  </NavLink> */}
-                </div>
-                <div className='navbar-item'>
+                <div className="navbar-item">
                   <div ref={ref2}>
-                    <div className="dropdown-custom dropdown-toggle btn"
-                      onMouseEnter={handleBtnClick2} onMouseLeave={closeMenu2}>
+                    <div
+                      className="dropdown-custom dropdown-toggle btn"
+                      onMouseEnter={handleBtnClick2}
+                      onMouseLeave={closeMenu2}
+                    >
                       Pages
-                      <span className='lines'></span>
+                      <span className="lines"></span>
                       {openMenu2 && (
-                        <div className='item-dropdown'>
+                        <div className="item-dropdown">
                           <div className="dropdown" onClick={closeMenu2}>
-                            {/* <NavLink to="/Author">Author</NavLink> */}
-                            {/* <NavLink to="/wallet">Wallet</NavLink> */}
-                            <NavLink to="/create">Create</NavLink>
-                            {/* <NavLink to="/create2">Create 2</NavLink> */}
-                            {/* <NavLink to="/createOptions">Create Option</NavLink> */}
-                            {/* <NavLink to="/news">News</NavLink> */}
-                            {/* <NavLink to="/works">Gallery</NavLink> */}
-                            {/* <NavLink to="/login">login</NavLink> */}
-                            {/* <NavLink to="/loginTwo">login 2</NavLink> */}
-                            {/* <NavLink to="/register">Register</NavLink> */}
-                            {/* <NavLink to="/contact">Contact Us</NavLink> */}
+                            {accountAddress?.toUpperCase() ==
+                              "0xC03E118eA1a055f909C0dDa77A47F130f07031CE".toUpperCase() ? (
+                              <NavLink
+                                to="/create"
+                                onClick={() => btn_icon(!showmenu)}
+                              >
+                                Create
+                              </NavLink>
+                            ) : (
+                              ""
+                            )}
+
+                            {accountAddress ? (
+                              <NavLink to="/userprofile">Profile</NavLink>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
-                {/* <div className='navbar-item'>
-                  <div ref={ref3}>
-                    <div className="dropdown-custom dropdown-toggle btn"
-                      onMouseEnter={handleBtnClick3} onMouseLeave={closeMenu3}>
-                      Elements
-                      <span className='lines'></span>
-                      {openMenu3 && (
-                        <div className='item-dropdown'>
-                          <div className="dropdown" onClick={closeMenu3}>
-                            <NavLink to="/elegantIcons">Elegant Icon</NavLink>
-                            <NavLink to="/etlineIcons">Etline Icon</NavLink>
-                            <NavLink to="/fontAwesomeIcons">Font Awesome Icon</NavLink>
-                            <NavLink to="/accordion">Accordion</NavLink>
-                            <NavLink to="/alerts">Alerts</NavLink>
-                            <NavLink to="/price">Pricing Table</NavLink>
-                            <NavLink to="/progressbar">Progess Bar</NavLink>
-                            <NavLink to="/tabs">Tabs</NavLink>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </Breakpoint>
           </BreakpointProvider>
 
-          <div className='mainside'>
-
-            <button className="btn-main" onClick={connectMetaMask} ><span>{`${walletAddress ? `Connected:${walletAddress.substring(0,5)} ...` : 'Connect to wallet'}`}</span>
-            </button>
-            {/* {metaAddress ? (<button className="btn-main">Connected:{data.address}</button>) : (<button onClick={connectMetaMask} className="btn-main">Connect to MetaMask</button>)} */}
-
-          </div>
-          {/* <span>{data.address}</span> */}
-
-        </div >
+          <div className="mainside">{METABTN}</div>
+        </div>
 
         <button className="nav-icon" onClick={() => btn_icon(!showmenu)}>
           <div className="menu-line white"></div>
           <div className="menu-line1 white"></div>
           <div className="menu-line2 white"></div>
         </button>
-
-      </div >
-    </header >
+      </div>
+    </header>
   );
-}
+};
+
 export default Header;

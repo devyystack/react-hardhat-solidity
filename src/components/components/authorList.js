@@ -1,153 +1,129 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { navigate } from "@reach/router"
+import axios from 'axios';
+import { URLS } from '../app-url'
+import { post } from 'jquery';
+import '../../../src/index.css'
 
-const authorlist= () => (
-  <div>
-    <ol className="author_list">
-      <li>                                    
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>
-                  <img className="lazy" src="./img/author/author-1.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>                                    
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Monica Lucas</span>
-              <span className="bot">3.2 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-2.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Mamie Barnett</span>
-              <span className="bot">2.8 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-3.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Nicholas Daniels</span>
-              <span className="bot">2.5 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-4.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Lori Hart</span>
-              <span className="bot">2.2 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-5.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Jimmy Wright</span>
-              <span className="bot">1.9 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-6.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Karla Sharp</span>
-              <span className="bot">1.6 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-7.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Gayle Hicks</span>
-              <span className="bot">1.5 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-8.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Claude Banks</span>
-              <span className="bot">1.3 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-9.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Franklin Greer</span>
-              <span className='bot'>0.9 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-10.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Stacy Long</span>
-              <span className='bot'>0.8 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-11.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Ida Chapman</span>
-              <span className='bot'>0.6 ETH</span>
-          </div>
-      </li>
-      <li>
-          <div className="author_list_pp">
-              <span onClick={()=> window.open("", "_self")}>                                    
-                  <img className="lazy" src="./img/author/author-12.jpg" alt=""/>
-                  <i className="fa fa-check"></i>
-              </span>
-          </div>
-          <div className="author_list_info">
-              <span onClick={()=> window.open("", "_self")}>Fred Ryan</span>
-              <span className='bot'>0.5 eth</span>
-          </div>
-      </li>
-    </ol>
-  </div>
-);
-export default authorlist;
+
+
+
+// const nft = "0xd50Ac5A501b4460aDfA9B2dFb11709a2DcC860d4"
+
+
+
+export default function authorlist() {
+    const [posts, setPosts] = useState([])
+
+
+
+    useEffect(() => {
+        axios.get(URLS.getTopUser)
+            .then(res => {
+                // console.log(res.data)
+                // console.log("resultss 0th first name")
+                // console.log(res.data.result[2].string[0].firstName)
+                // console.log(res.data.result[2].string[0].lastName)
+                // console.log(res.data.result[2].string[0].imagePath)
+                let topUserData = [];
+                for (let index = 0; index < res.data.result.length; index++) {
+                    let tempData = {};
+                    tempData['firstName'] = "";
+                    tempData['lastName'] = "";
+                    tempData['imagePath'] = "";
+                    if (res.data.result[index].string.length > 0) {
+                        tempData['firstName'] = res.data.result[index].string[0].firstName;
+                        tempData['lastName'] = res.data.result[index].string[0].lastName;
+                        tempData['imagePath'] = res.data.result[index].string[0].imagePath;
+                        // tempData['walletAddress'] = res.data.result[index].string[0].walletAddress;
+                    }
+                    tempData['walletAddress'] = res.data.result[index]._id;
+                    tempData['firstName'] = res.data.result[index].string.firstName;
+                    tempData['lastName'] = res.data.result[index].string.lastName;
+                    tempData['imagePath'] = res.data.result[index].string.imagePath;
+
+
+
+                    topUserData[index] = tempData;
+
+                }
+                // console.log("------------------------------topUserData")
+                // console.log(topUserData)
+                // debugger
+                setPosts(topUserData)
+                // setPosts(topUserData)
+
+
+                // [
+                //     {
+                //         id: res.data.result[2]._id,
+                //         counts:res.data.result[2].count,
+                //         personData : {
+                //             firstName,
+                //             lastName
+                //         }
+                //     },
+                //     {}
+                // ]
+                //console.log(res.data.result)
+                // console.log(posts)
+                // console.log(posts,"22222222222222222222222")
+
+
+            })
+
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            .catch(err => {
+                // console.log(err)
+            })
+
+    }, [])
+
+
+    function nftClickHandler(setPosts) {
+        setPosts._id = setPosts.walletAddress
+        // console.log(setPosts)
+        // console.log('clicked');
+        // console.log(nft, 'useraress----dvsdvsd----------------------------')
+        navigate("/topusercollection", { state: { USERADDRESS: setPosts } })
+        // console.log(setPosts, 'useraress-----1235555433---------------------------')
+        // console.log(posts, "csdcacacasaasasassas65564646446")
+
+    }
+
+
+    return (
+        <div>
+            <ul className="__author_list">
+
+                {
+                    posts?.map(post => (
+
+                        // < li key={post.walletAddress} onClick={() => `${nftClickHandler(post)}`}>
+
+                        //   <p style={{fontWeight:"800",cursor:"pointer"}}> {post.walletAddress.substring(0, 10)} </p>
+
+                        //     {/* </div> */}
+                        //     {post.firstName}
+                        // </li>
+                        <li key={post.walletAddress} onClick={() => `${nftClickHandler(post)}`}>
+                            <div className='_pi-wrapper' style={{ cursor: "pointer" }}>
+                                <div className='_profile-img' >
+                                    <img src={post?.imagePath}></img>
+                                </div>
+                                <div className='info'>
+                                    <h6 className='_name'>
+                                        {post?.firstName}  {post?.lastName}
+                                    </h6>
+                                    <p>{post.walletAddress}</p>
+                                </div>
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    )
+};

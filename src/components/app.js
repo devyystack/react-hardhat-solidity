@@ -1,8 +1,9 @@
 import React from 'react';
-import { Router, Location, Redirect } from '@reach/router';
+import { Router, Location, Redirect  } from '@reach/router';
+
 import ScrollToTopBtn from './menu/ScrollToTop';
 import Header from './menu/header';
-import Home from './pages/home';
+import Home from './pages/home/home';
 import Home1 from './pages/home1';
 import Home2 from './pages/home2';
 import Home3 from './pages/home3';
@@ -22,6 +23,7 @@ import Price from './pages/price';
 import Works from './pages/works';
 import News from './pages/news';
 import Create from './pages/create';
+import UserProfile from './pages/userProfile';
 import Create2 from './pages/create2';
 import Create3 from './pages/create3';
 import Createoption from './pages/createOptions';
@@ -35,9 +37,16 @@ import Alerts from './pages/alerts';
 import Progressbar from './pages/progressbar';
 import Tabs from './pages/tabs';
 import CarouselNew from "../components/components/CarouselNew";
-
+import TopUserCollection from './pages/topUserCollecion';
 import { createGlobalStyle } from 'styled-components';
 import { Carousel } from 'bootstrap';
+import Arts from './pages/Arts';
+import Music from './pages/Music';
+import Sports from "./pages/Sports";
+import Celeb from './pages/Celeb';
+import Influencer from './pages/Influencer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -92,6 +101,7 @@ const app = () => (
         <Works path="/works" />
         <News path="/news" />
         <Create path="/create" />
+        <UserProfile path="/userprofile" />
         <Create2 path="/create2" />
         <Create3 path="/create3" />
         <Createoption path="/createOptions" />
@@ -104,7 +114,13 @@ const app = () => (
         <Alerts path="/alerts" />
         <Progressbar path="/progressbar" />
         <Tabs path="/tabs" />
-        <CarouselNew path="/ItemJunaid"/>
+        <CarouselNew path="/ItemJunaid" />
+        <TopUserCollection path="/topusercollection" />
+        <Arts path="/category/:id" />
+        {/* <Music path ="/music"/>
+        <Sports path = "/sports"/>
+        <Celeb path = "/celebrity"/>
+        <Influencer path = "/influencer"/> */}
       </ScrollTop>
     </PosedRouter>
     <ScrollToTopBtn />

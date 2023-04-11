@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Clock from "../components/Clock";
 import Footer from '../components/footer';
 import { createGlobalStyle } from 'styled-components';
@@ -25,30 +25,37 @@ const GlobalStyles = createGlobalStyle`
 // const NFTDETAILS = JSON.parse(localStorage.getItem('SingleNFT'))
 // console.log(NFTDETAILS, "NFTDETAILS-------------------------------")
 const Colection = function (props) {
-    const NFT  = props.location.state.NFT;
-
+    const NFT = props.location.state.NFT;
+    // console.log(NFT, "NFT==-=================-------------------")
     const [openMenu, setOpenMenu] = React.useState(true);
     const [openMenu1, setOpenMenu1] = React.useState(false);
-    const handleBtnClick = (): void => {
+
+
+    let day = 0;
+    let month = 0;
+    let year = 0;
+    if (NFT.status == "Auction") {
+        let date = NFT.endDate.split("T")[0];
+        day = date.split("-")[2];
+        month = date.split("-")[1];
+        year = date.split("-")[0];
+    }
+
+
+
+    const handleBtnClick = () => {
         setOpenMenu(!openMenu);
         setOpenMenu1(false);
         document.getElementById("Mainbtn").classList.add("active");
         document.getElementById("Mainbtn1").classList.remove("active");
     };
-    const handleBtnClick1 = (): void => {
+    const handleBtnClick1 = () => {
         setOpenMenu1(!openMenu1);
         setOpenMenu(false);
         document.getElementById("Mainbtn1").classList.add("active");
         document.getElementById("Mainbtn").classList.remove("active");
     };
 
-    useEffect(() => {
-
-        return () => {
-            localStorage.removeItem('SingleNFT');
-
-        }
-    }, [])
 
     return (
         <div>
@@ -58,21 +65,33 @@ const Colection = function (props) {
                 <div className='row mt-md-5 pt-md-4'>
 
                     <div className="col-md-6 text-center">
-                        <img src={NFT.image} className="img-fluid img-rounded mb-sm-30" alt="" />
+                        <img src={NFT?.image ? NFT.image : NFT.imagePath} className="img-fluid img-rounded mb-sm-30" alt="" />
                     </div>
                     <div className="col-md-6">
                         <div className="item_info">
-                            Auctions ends in
-                            <div className="de_countdown">
-                                <Clock deadline="December, 30, 2021" />
-                            </div>
+                            {NFT.status == "Auction" && (
+                                <>
+                                    Auctions ends in
+                                    <div className="de_countdown">
+                                        <Clock deadline={month + "," + day + "," + year} />
+                                    </div>
+                                </>
+                            )}  
+                            {NFT.status == "sell" && (
+                                <>
+                                    Auctions ends in
+                                    <div className="de_countdown">
+                                    <Clock deadline="December, 30, 2021" />
+                                    </div>
+                                </>
+                            )}
                             <h2>{NFT.name}</h2>
-                            <div className="item_info_counts">
+                            {/* <div className="item_info_counts">
                                 <div className="item_info_type"><i className="fa fa-image"></i>Art</div>
                                 <div className="item_info_views"><i className="fa fa-eye"></i>250</div>
                                 <div className="item_info_like"><i className="fa fa-heart"></i>18</div>
-                            </div>
-                            <p>{NFT.description}</p>
+                            </div> */}
+                            <p>{NFT.nftDiscription}</p>
 
                             <h6>Creator</h6>
                             <div className="item_author">
@@ -83,13 +102,13 @@ const Colection = function (props) {
                                     </span>
                                 </div>
                                 <div className="author_list_info">
-                                    <span>{NFT.seller}</span>
+                                    <span>{NFT.walletAddress}</span>
                                 </div>
                             </div>
 
                             <div className="spacer-40"></div>
 
-                            <div className="de_tab">
+                            {/* <div className="de_tab">
 
                                 <ul className="de_nav">
                                     <li id='Mainbtn' className="active"><span onClick={handleBtnClick}>Bids</span></li>
@@ -224,7 +243,7 @@ const Colection = function (props) {
 
                                 </div>
 
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
